@@ -1,0 +1,32 @@
+version: '3.9'
+
+services:
+  streamlit:
+    build:
+      context: ./streamlit_app
+      dockerfile: Dockerfile
+    volumes:
+      - ./streamlit_app:/app
+    depends_on:
+      - ollama
+      - qdrant
+    network_mode: host
+
+  ollama:
+    image: ollama/ollama
+    privileged: true
+    volumes:
+      - ollama_data:/root/.ollama
+    restart: unless-stopped
+    network_mode: host
+
+  qdrant:
+    image: qdrant/qdrant
+    volumes:
+      - qdrant_data:/qdrant/storage
+    restart: unless-stopped
+    network_mode: host
+
+volumes:
+  qdrant_data:
+  ollama_data:
