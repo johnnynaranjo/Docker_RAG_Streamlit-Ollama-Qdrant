@@ -52,8 +52,8 @@ Puedes subir archivos (PDF, TXT, etc.) a través de la interfaz para hacer pregu
 ## 📄 Uso
 
 ```bash
-git clone https://github.com/tuusuario/tu-repo.git
-cd tu-repo
+git clone https://github.com/johnnynaranjo/Docker_RAG_Streamlit-Ollama-Qdrant.git
+cd Docker_RAG_Streamlit-Ollama-Qdrant
 docker-compose up --build
 ```
 
