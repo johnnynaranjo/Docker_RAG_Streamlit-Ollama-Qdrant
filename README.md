@@ -31,7 +31,7 @@ docker-compose up --build
 
 ## 📁 Carga de Archivos
 
-Puedes subir archivos (PDF, TXT, etc.) a través de la interfaz para hacer preguntas basadas en su contenido. Los documentos se vectorizan y almacenan en Qdrant para permitir búsquedas semánticas.
+Puedes subir archivos (PDF) a través de la interfaz para hacer preguntas basadas en su contenido. Los documentos se vectorizan y almacenan en Qdrant para permitir búsquedas semánticas.
 
 ---
 
