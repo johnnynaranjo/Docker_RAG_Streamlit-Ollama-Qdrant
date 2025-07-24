@@ -23,7 +23,7 @@ def main():
 
     st.selectbox("Please select the model:", [model["model"] for model in ollama.list()["models"]], key = "selected_model")
     if st.button("Obtener información"):
-        info = ollama_model_info("http://localhost:11434", st.session_state.selected_model)
+        info = ollama_model_info("http://ollama:11434", st.session_state.selected_model)
         st.json(info)
 
 if __name__ == "__main__":
