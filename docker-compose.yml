@@ -1,32 +1,66 @@
-version: '3.9'
 
 services:
   streamlit:
     build:
       context: ./streamlit_app
       dockerfile: Dockerfile
+    ports:
+      - "8501:8501"
     volumes:
       - ./streamlit_app:/app
     depends_on:
-      - ollama
-      - qdrant
-    network_mode: host
+      ollama:
+        condition: service_healthy
+      qdrant:
+        condition: service_healthy
+    environment:
+      - OLLAMA_HOST=http://ollama:11434
+    networks:
+      - rag_app
 
   ollama:
     image: ollama/ollama
-    privileged: true
+    privileged: true      # Note: The 'privileged' mode is used to allow Ollama to access the GPU if available.
+    ports:
+      - "11434:11434"
     volumes:
       - ollama_data:/root/.ollama
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
     restart: unless-stopped
-    network_mode: host
+    healthcheck:
+      test: ["CMD-SHELL", "exec bash -c 'echo > /dev/tcp/localhost/11434 || exit 1'"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - rag_app
 
   qdrant:
     image: qdrant/qdrant
+    ports:
+      - "6333:6333"         # API HTTP
+      - "6334:6334"         # gRPC (opcional)
     volumes:
       - qdrant_data:/qdrant/storage
     restart: unless-stopped
-    network_mode: host
+    healthcheck:
+      test: ["CMD-SHELL", "exec bash -c 'echo > /dev/tcp/localhost/6333 || exit 1'"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - rag_app
 
 volumes:
   qdrant_data:
   ollama_data:
+
+networks:
+  rag_app:
+    driver: bridge
