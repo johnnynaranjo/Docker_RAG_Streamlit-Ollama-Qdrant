@@ -168,7 +168,7 @@ def main():
     st.sidebar.title('Ajustes')
 
     # Verificar si hay modelos cargados en Ollama
-    ollama_check_model("http://localhost:11434", "Ollama")
+    ollama_check_model("http://ollama:11434", "Ollama")
 
     # Opción para subir archivo o carpeta
     upload_option = st.sidebar.radio("Selecciona fuente de datos:", ["Archivo PDF", "Carpeta con PDFs"])
@@ -190,7 +190,7 @@ def main():
             st.warning("La ruta proporcionada no es válida.")
 
     # Conexión con Qdrant
-    client = qdrant_check_db("http://localhost:6333", "Qdrant")
+    client = qdrant_check_db("http://qdrant:6333", "Qdrant")
 
     if st.button("Crear índice vectorial"):
         if not doc:
@@ -198,7 +198,7 @@ def main():
         else:
             if client:
                 qdrant_create_vector_index(
-                    url="http://localhost:6333",
+                    url="http://qdrant:6333",
                     container_name="Qdrant",
                     embedding_model_name=st.session_state.selected_model,
                     collection_name=st.session_state.selected_db,
