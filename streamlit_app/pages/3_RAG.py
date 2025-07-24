@@ -137,8 +137,8 @@ def main():
     )
     st.title("🤖 Chatea con RAG")
 
-    ollama_check_model("http://localhost:11434", "Ollama")
-    client = qdrant_check_db("http://localhost:6333", "Qdrant")
+    ollama_check_model("http://ollama:11434", "Ollama")
+    client = qdrant_check_db("http://qdrant:6333", "Qdrant")
 
     st.sidebar.selectbox(
         "Embeddings disponibles:",
