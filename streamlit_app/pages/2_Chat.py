@@ -72,7 +72,7 @@ def main():
     st.title("🦜 Chatea con Ollama")
 
     # Verificar si hay modelos cargados en Ollama
-    ollama_check_model("http://localhost:11434", "Ollama")
+    ollama_check_model("http://ollama:11434", "Ollama")
 
     # Display chat messages from history on app rerun
     for message in st.session_state.chat_messages:
