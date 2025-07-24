@@ -46,7 +46,6 @@ Puedes subir archivos (PDF) a través de la interfaz para hacer preguntas basada
 
 - Docker
 - Docker Compose
-- Linux
 
 ---
 
