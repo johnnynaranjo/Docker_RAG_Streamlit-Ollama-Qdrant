@@ -27,7 +27,7 @@ def check_connection(url, container_name: str):
         st.error(f"⏱️ Tiempo de espera agotado esperando respuesta de {container_name}.")
         return False
     except requests.exceptions.ConnectionError:
-        st.error(f"❌ No se pudo establecer conexión con {container_name}. Asegúrate de que esté en ejecución.")
+        st.error(f"❌ No se pudo establecer conexión con {container_name} usando {url}. Asegúrate de que esté en ejecución.")
         return False
     except Exception as e:
         st.error(f"⚠️ Error inesperado al conectar con {container_name}: {e}")
@@ -139,7 +139,7 @@ def main():
     st.title("⚙️ Ajustes de la aplicación")
 
     # Verificar si hay modelos cargados en Ollama
-    ollama_check_model("http://localhost:11434", "Ollama")
+    ollama_check_model("http://ollama:11434", "Ollama")
 
     # Opción para descargar nuevo modelo
     with st.form("llm_form"):
@@ -149,7 +149,7 @@ def main():
             ollama_pull_model(model_to_pull)
  
     # Verificar si hay modelos cargados en Qdrant
-    client = qdrant_check_db("http://localhost:6333", "Qdrant")
+    client = qdrant_check_db("http://qdrant:6333", "Qdrant")
 
     # # Dimension del embedding
     # embedding_dim = st.sidebar.number_input("Dimensión del embedding", value=1024, step=1)
@@ -167,11 +167,11 @@ def main():
 
     # Eliminar modelos
     with st.expander("🗑️ Eliminar modelos de Ollama"):
-        ollama_delete_model("http://localhost:11434", "Ollama")
+        ollama_delete_model("http://ollama:11434", "Ollama")
 
     # Eliminar colecciones
     with st.expander("🗑️ Eliminar colecciones de Qdrant"):
-        qdrant_delete_db("http://localhost:6333", "Qdrant")
+        qdrant_delete_db("http://qdrant:6333", "Qdrant")
 
 if __name__ == "__main__":
     main()
